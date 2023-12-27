@@ -4,6 +4,7 @@ from typing import List
 import norfair
 import numpy as np
 import PIL
+from PIL import ImageFont, ImageDraw
 
 
 class Draw:
