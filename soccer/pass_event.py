@@ -293,7 +293,7 @@ class PassEvent:
 
     def process_pass(self) -> None:
         """
-        Check if a new pass was generated and in the positive case save the new pass into de right team
+        Check if a new pass was generated and in the positive case save the new pass into the right team
         """
         if self.player_with_ball_counter >= self.player_with_ball_threshold:
             # init the last player with ball
@@ -308,15 +308,22 @@ class PassEvent:
             if valid_pass:
                 # Generate new pass
                 team = self.closest_player.team
-                start_pass = self.last_player_with_ball.closest_foot_to_ball_abs(
-                    self.ball
-                )
-                end_pass = self.ball.detection.absolute_points
+                
+                # Ensure that the 'team' object is not None
+                if team is not None:
+                    # Assuming that team.passes is a list, make sure it is initialized
+                    if not hasattr(team, 'passes'):
+                        team.passes = []
+                    
+                    start_pass = self.last_player_with_ball.closest_foot_to_ball_abs(
+                        self.ball
+                    )
+                    end_pass = self.ball.detection.absolute_points
 
-                new_pass = self.generate_pass(
-                    team=team, start_pass=start_pass, end_pass=end_pass
-                )
-                team.passes.append(new_pass)
+                    new_pass = self.generate_pass(
+                        team=team, start_pass=start_pass, end_pass=end_pass
+                    )
+                    team.passes.append(new_pass)
             else:
                 if (
                     self.player_with_ball_counter
