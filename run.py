@@ -55,17 +55,17 @@ hsv_classifier = HSVClassifier(filters=filters)
 classifier = InertiaClassifier(classifier=hsv_classifier, inertia=20)
 
 # Teams and Match
-chelsea = Team(
-    name="Chelsea",
-    abbreviation="CHE",
+berkan = Team(
+    name="berkane",
+    abbreviation="rsb",
     color=(255, 0, 0),
     board_color=(244, 86, 64),
     text_color=(255, 255, 255),
 )
-man_city = Team(name="Man City", abbreviation="MNC", color=(240, 230, 188))
-teams = [chelsea, man_city]
-match = Match(home=chelsea, away=man_city, fps=fps)
-match.team_possession = man_city
+raja = Team(name="raja ", abbreviation="rca", color=(240, 230, 188))
+teams = [berkan, raja]
+match = Match(home=berkan, away=raja, fps=fps)
+match.team_possession = raja
 
 # Tracking
 player_tracker = Tracker(
