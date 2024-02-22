@@ -62,7 +62,7 @@ berkan = Team(
     board_color=(244, 86, 64),
     text_color=(255, 255, 255),
 )
-raja = Team(name="raja ", abbreviation="RCA", color=(240, 230, 188))
+raja = Team(name="raja ", abbreviation="RCA", color=(0, 255, 0))
 teams = [berkan, raja]
 match = Match(home=berkan, away=raja, fps=fps)
 match.team_possession = raja
