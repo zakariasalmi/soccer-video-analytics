@@ -337,14 +337,14 @@ class Match:
             ratio = 0.93
 
         left_rectangle = (
-            origin,
-            [int(bar_x + ratio * bar_width), int(bar_y + bar_height)],
+        (bar_x + bar_width - ratio * bar_width, bar_y),  # Coin supérieur gauche
+        (bar_x + bar_width, bar_y + bar_height)  # Coin inférieur droit
         )
 
         right_rectangle = (
-            [int(bar_x + ratio * bar_width), bar_y],
-            [int(bar_x + bar_width), int(bar_y + bar_height)],
-        )
+        (bar_x + bar_width - away_ratio * bar_width, bar_y),  # Coin supérieur gauche
+        (bar_x + bar_width - ratio * bar_width, bar_y + bar_height)  # Coin inférieur droit
+         )
 
         left_color = self.home.board_color
         right_color = self.away.board_color
@@ -407,7 +407,7 @@ class Match:
         counter = np.array([blue, green, red, alpha])
         counter = counter.transpose()
         counter = PIL.Image.fromarray(counter)
-        counter = counter.resize((int(315 * 1.2), int(210 * 1.2)))
+        counter = counter.resize((int(315 * 0.6), int(210 * 0.6)))
         return counter
 
     def get_passes_background(self) -> PIL.Image.Image:
@@ -427,7 +427,7 @@ class Match:
         counter = np.array([blue, green, red, alpha])
         counter = counter.transpose()
         counter = PIL.Image.fromarray(counter)
-        counter = counter.resize((int(315 * 1.2), int(210 * 1.2)))
+        counter = counter.resize((int(315 * 0.6), int(210 * 0.6)))
         return counter
 
     def draw_counter_background(
