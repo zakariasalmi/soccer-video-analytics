@@ -561,19 +561,22 @@ class Match:
     # Draw team text
         frame = Draw.text_in_middle_rectangle(
         img=frame,
-        position=team_text_position,
-        text=counter_text,
+        origin=team_text_position,  # Use origin instead of position
+        width=team_width,  # Use width instead of height
+        height=height,  # Use height instead of width
+        text=text,
         color=text_color,
     )
 
     # Draw counter text
         frame = Draw.text_in_middle_rectangle(
         img=frame,
-        position=time_text_position,
+        origin=time_text_position,  # Use origin instead of position
+        width=time_width,  # Use width instead of height
+        height=height,  # Use height instead of width
         text=counter_text,
         color="black",
     )
-        return frame
 
     def draw_debug(self, frame: PIL.Image.Image) -> PIL.Image.Image:
         """Draw line from closest player feet to ball
