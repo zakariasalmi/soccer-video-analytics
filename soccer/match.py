@@ -638,13 +638,6 @@ class Match:
             frame, origin=(counter_origin[0] + 35, counter_origin[1] + 195)
         )
 
-        # Add passes counter text for each team to the frame
-        home_passes_text = f"Passes {self.home.abbreviation}: {len(self.home.passes)}"
-        away_passes_text = f"Passes {self.away.abbreviation}: {len(self.away.passes)}"
-        draw = PIL.ImageDraw.Draw(frame)
-        draw.text((counter_origin[0] + 35, counter_origin[1] + 260), home_passes_text, font=None, fill=self.home.text_color)
-        draw.text((counter_origin[0] + 35 + 150 + 10, counter_origin[1] + 260), away_passes_text, font=None, fill=self.away.text_color)
-
         if self.closest_player:
             frame = self.closest_player.draw_pointer(frame)
 
