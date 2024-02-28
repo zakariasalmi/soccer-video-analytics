@@ -337,14 +337,14 @@ class Match:
             ratio = 0.93
 
         left_rectangle = (
-        (bar_x + bar_width - ratio * bar_width, bar_y),  # Coin supérieur gauche
-        (bar_x + bar_width, bar_y + bar_height)  # Coin inférieur droit
+            origin,
+            [int(bar_x + ratio * bar_width), int(bar_y + bar_height)],
         )
 
         right_rectangle = (
-        (bar_x + bar_width - away_ratio * bar_width, bar_y),  # Coin supérieur gauche
-        (bar_x + bar_width - ratio * bar_width, bar_y + bar_height)  # Coin inférieur droit
-         )
+            [int(bar_x + ratio * bar_width), bar_y],
+            [int(bar_x + bar_width), int(bar_y + bar_height)],
+        )
 
         left_color = self.home.board_color
         right_color = self.away.board_color
@@ -407,7 +407,7 @@ class Match:
         counter = np.array([blue, green, red, alpha])
         counter = counter.transpose()
         counter = PIL.Image.fromarray(counter)
-        counter = counter.resize((int(315 * 0.6), int(210 * 0.6)))
+        counter = counter.resize((int(315 * 1.2), int(210 * 1.2)))
         return counter
 
     def get_passes_background(self) -> PIL.Image.Image:
@@ -427,7 +427,7 @@ class Match:
         counter = np.array([blue, green, red, alpha])
         counter = counter.transpose()
         counter = PIL.Image.fromarray(counter)
-        counter = counter.resize((int(315 * 0.6), int(210 * 0.6)))
+        counter = counter.resize((int(315 * 1.2), int(210 * 1.2)))
         return counter
 
     def draw_counter_background(
@@ -516,67 +516,36 @@ class Match:
             img=frame,
             rectangle=team_rectangle,
             color=color,
-            radius=height // 2,
+            radius=20,
         )
 
         frame = Draw.half_rounded_rectangle(
             img=frame,
             rectangle=time_rectangle,
             color=(239, 234, 229),
-            radius=height // 2,
+            radius=20,
             left=True,
         )
 
-        # Calculate positions for team and time texts to be centered
-        team_text_position = (
-        team_begin[0] + team_width // 2 - len(text) * 2,  # Adjust for centering
-        team_begin[1] + height // 2 - 10,  # Adjust for centering
-         )
-
-        time_text_position = (
-        time_begin[0] + time_width // 2 - len(counter_text) * 2,  # Adjust for centering
-        time_begin[1] + height // 2 - 10,  # Adjust for centering
-         )
-
-        # frame = Draw.text_in_middle_rectangle(
-        #   img=frame,
-        #   origin=team_rectangle[0],
-        #   height=height,
-        #    width=team_width,
-        #    text=text,
-        #    color=text_color,
-        #)
-
-        #frame = Draw.text_in_middle_rectangle(
-        #    img=frame,
-        #    origin=time_rectangle[0],
-        #    height=height,
-        #    width=time_width,
-        #    text=counter_text,
-        #    color="black",
-        #)
-
-        #return frame
-    #
-    # Draw team text
         frame = Draw.text_in_middle_rectangle(
-        img=frame,
-        origin=team_text_position,  # Use origin instead of position
-        width=team_width,  # Use width instead of height
-        height=height,  # Use height instead of width
-        text=text,
-        color=text_color,
-    )
+            img=frame,
+            origin=team_rectangle[0],
+            height=height,
+            width=team_width,
+            text=text,
+            color=text_color,
+        )
 
-    # Draw counter text
         frame = Draw.text_in_middle_rectangle(
-        img=frame,
-        origin=time_text_position,  # Use origin instead of position
-        width=time_width,  # Use width instead of height
-        height=height,  # Use height instead of width
-        text=counter_text,
-        color="black",
-    )
+            img=frame,
+            origin=time_rectangle[0],
+            height=height,
+            width=time_width,
+            text=counter_text,
+            color="black",
+        )
+
+        return frame
 
     def draw_debug(self, frame: PIL.Image.Image) -> PIL.Image.Image:
         """Draw line from closest player feet to ball
@@ -668,6 +637,13 @@ class Match:
         frame = self.possession_bar(
             frame, origin=(counter_origin[0] + 35, counter_origin[1] + 195)
         )
+
+        # Add passes counter text for each team to the frame
+        home_passes_text = f"Passes {self.home.abbreviation}: {len(self.home.passes)}"
+        away_passes_text = f"Passes {self.away.abbreviation}: {len(self.away.passes)}"
+        draw = PIL.ImageDraw.Draw(frame)
+        draw.text((counter_origin[0] + 35, counter_origin[1] + 260), home_passes_text, font=None, fill=self.home.text_color)
+        draw.text((counter_origin[0] + 35 + 150 + 10, counter_origin[1] + 260), away_passes_text, font=None, fill=self.away.text_color)
 
         if self.closest_player:
             frame = self.closest_player.draw_pointer(frame)
