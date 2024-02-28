@@ -57,6 +57,7 @@ class Match:
         """
 
         self.update_possession()
+        
 
         if ball is None or ball.detection is None:
             self.closest_player = None
