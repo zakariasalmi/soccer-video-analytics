@@ -18,6 +18,7 @@ from run_utils import (
 from soccer import Match, Player, Team
 from soccer.draw import AbsolutePath
 from soccer.pass_event import Pass
+import time
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -92,7 +93,8 @@ possession_background = match.get_possession_background()
 passes_background = match.get_passes_background()
 
 for i, frame in enumerate(video):
-
+    start = time.time()
+    
     # Get Detections
     players_detections = get_player_detections(player_detector, frame)
     ball_detections = get_ball_detections(ball_detector, frame)
@@ -104,7 +106,13 @@ for i, frame in enumerate(video):
         detections=detections,
         frame=frame,
     )
-
+    
+    elapsed_time = time.time() - start
+    if elapsed_time > 0:
+        process_fps = i / elapsed_time
+    else:
+        process_fps = 0
+    
     player_track_objects = player_tracker.update(
         detections=players_detections, coord_transformations=coord_transformations
     )
