@@ -516,35 +516,63 @@ class Match:
             img=frame,
             rectangle=team_rectangle,
             color=color,
-            radius=20,
+            radius=height // 2,
         )
 
         frame = Draw.half_rounded_rectangle(
             img=frame,
             rectangle=time_rectangle,
             color=(239, 234, 229),
-            radius=20,
+            radius=height // 2,
             left=True,
         )
 
-        frame = Draw.text_in_middle_rectangle(
-            img=frame,
-            origin=team_rectangle[0],
-            height=height,
-            width=team_width,
-            text=text,
-            color=text_color,
-        )
+        # Calculate positions for team and time texts to be centered
+        team_text_position = (
+        team_begin[0] + team_width // 2 - len(text) * 2,  # Adjust for centering
+        team_begin[1] + height // 2 - 10,  # Adjust for centering
+         )
 
-        frame = Draw.text_in_middle_rectangle(
-            img=frame,
-            origin=time_rectangle[0],
-            height=height,
-            width=time_width,
-            text=counter_text,
-            color="black",
-        )
+        time_text_position = (
+        time_begin[0] + time_width // 2 - len(counter_text) * 2,  # Adjust for centering
+        time_begin[1] + height // 2 - 10,  # Adjust for centering
+         )
 
+        # frame = Draw.text_in_middle_rectangle(
+        #   img=frame,
+        #   origin=team_rectangle[0],
+        #   height=height,
+        #    width=team_width,
+        #    text=text,
+        #    color=text_color,
+        #)
+
+        #frame = Draw.text_in_middle_rectangle(
+        #    img=frame,
+        #    origin=time_rectangle[0],
+        #    height=height,
+        #    width=time_width,
+        #    text=counter_text,
+        #    color="black",
+        #)
+
+        #return frame
+    #
+    # Draw team text
+        frame = Draw.text_in_middle_rectangle(
+        img=frame,
+        position=team_text_position,
+        text=counter_text,
+        color=text_color,
+    )
+
+    # Draw counter text
+        frame = Draw.text_in_middle_rectangle(
+        img=frame,
+        position=time_text_position,
+        text=counter_text,
+        color="black",
+    )
         return frame
 
     def draw_debug(self, frame: PIL.Image.Image) -> PIL.Image.Image:
