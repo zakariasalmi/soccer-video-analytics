@@ -55,14 +55,14 @@ hsv_classifier = HSVClassifier(filters=filters)
 classifier = InertiaClassifier(classifier=hsv_classifier, inertia=20)
 
 # Teams and Match
-berkan = Team(
-    name="berkane",
-    abbreviation="RSB",
-    color=(255, 0, 0),
-    board_color=(244, 86, 64),
+raja = Team(
+    name="RAJA",
+    abbreviation="RCA",
+    color=(0, 250, 0),
+    board_color=(0, 250, 0),
     text_color=(255, 255, 255),
 )
-raja = Team(name="raja ", abbreviation="RCA", color=(0, 255, 0))
+berkan = Team(name="berkan ", abbreviation="RSB", color=(244, 86, 64))
 teams = [berkan, raja]
 match = Match(home=berkan, away=raja, fps=fps)
 match.team_possession = raja
