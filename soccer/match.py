@@ -32,6 +32,7 @@ class Match:
         self.team_possession = self.home
         self.current_team = self.home
         self.possession_counter = 0
+
         self.closest_player = None
         self.ball = None
         # Amount of consecutive frames new team has to have the ball in order to change possession
@@ -56,6 +57,7 @@ class Match:
         """
 
         self.update_possession()
+        
 
         if ball is None or ball.detection is None:
             self.closest_player = None
@@ -636,6 +638,13 @@ class Match:
             frame, origin=(counter_origin[0] + 35, counter_origin[1] + 195)
         )
 
+        # Add passes counter text for each team to the frame
+        home_passes_text = f"Passes {self.home.abbreviation}: {len(self.home.passes)}"
+        away_passes_text = f"Passes {self.away.abbreviation}: {len(self.away.passes)}"
+        draw = PIL.ImageDraw.Draw(frame)
+        draw.text((counter_origin[0] + 35, counter_origin[1] + 260), home_passes_text, font=None, fill=self.home.text_color)
+        draw.text((counter_origin[0] + 35 + 150 + 10, counter_origin[1] + 260), away_passes_text, font=None, fill=self.away.text_color)
+
         if self.closest_player:
             frame = self.closest_player.draw_pointer(frame)
 
@@ -710,3 +719,6 @@ class Match:
             frame = self.draw_debug(frame=frame)
 
         return frame
+    
+    def increment_pass_count(self):
+        self.pass_count += 1

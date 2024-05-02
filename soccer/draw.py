@@ -4,6 +4,7 @@ from typing import List
 import norfair
 import numpy as np
 import PIL
+from PIL import ImageFont, ImageDraw
 
 
 class Draw:
@@ -397,7 +398,7 @@ class Draw:
         draw = PIL.ImageDraw.Draw(img)
 
         if font is None:
-            font = PIL.ImageFont.truetype("fonts/Gidole-Regular.ttf", size=24)
+            font = PIL.ImageFont.truetype("fonts/Gidole-Regular.ttf", size=24 )
 
         w, h = draw.textsize(text, font=font)
         text_origin = (
