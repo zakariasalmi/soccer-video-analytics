@@ -680,7 +680,7 @@ class Match:
 
         # get width of PIL.Image
         frame_width = frame.size[0]
-        counter_origin = (frame_width - 540, 90)
+        counter_origin = (frame_width - 340, 290)
 
         frame = self.draw_counter_background(
             frame,
